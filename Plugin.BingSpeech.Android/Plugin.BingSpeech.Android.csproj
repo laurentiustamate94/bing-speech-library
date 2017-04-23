@@ -42,13 +42,13 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.CurrentActivity, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\codecamp-2017\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
+      <HintPath>..\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.NetStandardStorage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\codecamp-2017\packages\Plugin.NetStandardStorage.1.0.5\lib\MonoAndroid10\Plugin.NetStandardStorage.dll</HintPath>
+      <HintPath>..\packages\Plugin.NetStandardStorage.1.0.5\lib\MonoAndroid10\Plugin.NetStandardStorage.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.NetStandardStorage.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\codecamp-2017\packages\Plugin.NetStandardStorage.1.0.5\lib\MonoAndroid10\Plugin.NetStandardStorage.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Plugin.NetStandardStorage.1.0.5\lib\MonoAndroid10\Plugin.NetStandardStorage.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
