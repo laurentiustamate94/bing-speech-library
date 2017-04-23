@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<package>
+    <metadata>
+        <id>Plugin.BingSpeech</id>
+        <version>1.0.0</version>
+        <title>BingSpeech</title>
+        <authors>Laurentiu Stamate</authors>
+        <owners>Laurentiu Stamate</owners>
+        <licenseUrl>https://github.com/laurentiustamate94/bing-speech-library/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/laurentiustamate94/bing-speech-library</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/laurentiustamate94/bing-speech-library/master/nuget/logo.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>NetStandard implementation of the Bing Speech API (Speech-To-Text) from Microsoft Cognitive Services</description>
+        <releaseNotes>Initial release containing all the necessary speech recognition logic</releaseNotes>
+        <copyright>Copyright 2017</copyright>
+        <tags>xamarin xamarin-forms netstandard bing-speech microsoft cognitive-services speech-to-text</tags>
+        <dependencies>
+            <group>
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="Plugin.NetStandardStorage" version="1.0.5" />
+            </group>
+            <group targetFramework="MonoAndroid10">
+                <!-- MonoAndroid dependencies go here -->
+                <dependency id="Plugin.CurrentActivity" version="1.0.1" />
+                <dependency id="System.Net.Http" version="4.3.1" />
+            </group>
+            <group targetFramework="Xamarin.iOS10">
+                <!-- Xamarin.iOS10 dependencies go here -->
+                <dependency id="System.Net.Http" version="4.3.1" />
+            </group>
+            <group targetFramework="uap10">
+                <!-- UWP dependencies go here -->
+                <dependency id="NETStandard.Library" version="1.6.1" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <!-- NetStandard reference assemblies -->
+        <file src="..\Plugin.BingSpeech\bin\Release\Plugin.BingSpeech.dll" target="lib\netstandard1.4\Plugin.BingSpeech.dll" />
+        <file src="..\Plugin.BingSpeech.Abstractions\bin\Release\Plugin.BingSpeech.Abstractions.dll" target="lib\netstandard1.4\Plugin.BingSpeech.Abstractions.dll" />
+        
+		<!-- Android reference assemblies -->
+        <file src="..\Plugin.BingSpeech.Android\bin\Release\Plugin.BingSpeech.dll" target="lib\MonoAndroid10\Plugin.BingSpeech.dll" />
+        <file src="..\Plugin.BingSpeech.Abstractions\bin\Release\Plugin.BingSpeech.Abstractions.dll" target="lib\MonoAndroid10\Plugin.BingSpeech.Abstractions.dll" />
+        
+		<!-- iOS reference assemblies -->
+        <file src="..\Plugin.BingSpeech.iOS\bin\Release\Plugin.BingSpeech.dll" target="lib\Xamarin.iOS10\Plugin.BingSpeech.dll" />
+        <file src="..\Plugin.BingSpeech.Abstractions\bin\Release\Plugin.BingSpeech.Abstractions.dll" target="lib\Xamarin.iOS10\Plugin.BingSpeech.Abstractions.dll" />
+        
+		<!-- UWP reference assemblies -->
+        <file src="..\Plugin.BingSpeech.UWP\bin\Release\Plugin.BingSpeech.dll" target="lib\uap10\Plugin.BingSpeech.dll" />
+        <file src="..\Plugin.BingSpeech.Abstractions\bin\Release\Plugin.BingSpeech.Abstractions.dll" target="lib\uap10\Plugin.BingSpeech.Abstractions.dll" />
+    </files>
+</package>
