@@ -9,7 +9,7 @@ namespace Plugin.BingSpeech.Services
     internal class AuthenticationService : IAuthenticationService
     {
         private string subscriptionKey;
-        private string token;
+        private string _token;
 
         private readonly string baseUri;
         private readonly int refreshTokenMinutes;
@@ -18,11 +18,11 @@ namespace Plugin.BingSpeech.Services
         {
             get
             {
-                return this.token;
+                return this._token;
             }
         }
 
-        public AuthenticationService()
+        private AuthenticationService()
         {
             this.baseUri = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken";
             this.refreshTokenMinutes = 9;
@@ -60,7 +60,7 @@ namespace Plugin.BingSpeech.Services
 
             task.Wait();
 
-            this.token = task.Result;
+            this._token = task.Result;
         }
 
         private async Task<string> FetchToken(string fetchUri)
