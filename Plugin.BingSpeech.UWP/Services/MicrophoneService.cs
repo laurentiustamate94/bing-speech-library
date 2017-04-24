@@ -18,18 +18,18 @@ namespace Plugin.BingSpeech.Services
         private readonly uint CHANNEL = 1;
         private readonly uint BITS_PER_SAMPLE = 16;
         private readonly uint SAMPLE_RATE = 16000;
-        private readonly string OUTPUT_FILE = "plugin-bingspeech-audio.wav";
 
         private AudioGraph _audioGraph = null;
         private AudioFileOutputNode _audioFileOutputNode = null;
         private StorageFile _storageFile = null;
+        private string outputFilename = null;
 
         public void ContinuousDictation()
         {
             throw new NotImplementedException();
         }
 
-        public void StartRecording()
+        public void StartRecording(string recordingFilename)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace Plugin.BingSpeech.Services
         private async Task StartRecordingAsync()
         {
             var outputFilePath = CrossStorage.FileSystem.LocalStorage
-               .CreateFile(OUTPUT_FILE, NetStandardStorage.Abstractions.Types.CreationCollisionOption.ReplaceExisting)
+               .CreateFile(this.outputFilename, NetStandardStorage.Abstractions.Types.CreationCollisionOption.ReplaceExisting)
                .FullPath;
 
             this._storageFile = await StorageFile.GetFileFromPathAsync(outputFilePath);
@@ -122,6 +122,11 @@ namespace Plugin.BingSpeech.Services
                 throw new MicrophoneServiceException("You have to start recording first !");
             }
 
+            if (this.outputFilename == null)
+            {
+                throw new MicrophoneServiceException("You have to start recording first !");
+            }
+
             this._audioGraph.Stop();
             await this._audioFileOutputNode.FinalizeAsync();
 
@@ -131,8 +136,13 @@ namespace Plugin.BingSpeech.Services
 
         public void RemoveRecording()
         {
+            if (this.outputFilename == null)
+            {
+                throw new MicrophoneServiceException("You have to start recording first !");
+            }
+
             CrossStorage.FileSystem.LocalStorage
-                .GetFile(OUTPUT_FILE)
+                .GetFile(this.outputFilename)
                 .Delete();
         }
     }

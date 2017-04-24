@@ -2,7 +2,7 @@
 {
     public interface IMicrophoneService
     {
-        void StartRecording();
+        void StartRecording(string recordingFilename);
 
         void StopRecording();
 

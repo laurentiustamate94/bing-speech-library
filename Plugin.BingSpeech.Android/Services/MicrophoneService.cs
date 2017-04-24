@@ -19,11 +19,11 @@ namespace Plugin.BingSpeech.Services
         private readonly Encoding ENCODING = Encoding.Pcm16bit;
         private readonly ChannelIn MONO_CHANNEL = ChannelIn.Mono;
         private readonly ChannelIn STEREO_CHANNEL = ChannelIn.Stereo;
-        private readonly string OUTPUT_FILE = "plugin-bingspeech-audio.wav";
         private readonly string OUTPUT_TEMP_FILE = "plugin-bingspeech-audio-temp.wav";
 
         private int _sampleRate = -1;
         private int _bufferSize = -1;
+        private string outputFilename = null;
         private bool _isRecording = false;
         private AudioRecord _audioRecord = null;
         private CancellationTokenSource _cancellationToken = null;
@@ -33,10 +33,12 @@ namespace Plugin.BingSpeech.Services
             throw new NotImplementedException();
         }
 
-        public void StartRecording()
+        public void StartRecording(string recordingFilename)
         {
             try
             {
+                this.outputFilename = recordingFilename;
+
                 InitialiseRecorder();
 
                 if (this._audioRecord == null)
@@ -99,6 +101,11 @@ namespace Plugin.BingSpeech.Services
                     throw new MicrophoneServiceException("You have to start recording first !");
                 }
 
+                if (this.outputFilename == null)
+                {
+                    throw new MicrophoneServiceException("You have to start recording first !");
+                }
+
                 this._audioRecord.Stop();
 
                 this._isRecording = false;
@@ -120,7 +127,7 @@ namespace Plugin.BingSpeech.Services
             var tempFile = CrossStorage.FileSystem.LocalStorage
                 .GetFile(this.OUTPUT_TEMP_FILE);
             var outputFile = CrossStorage.FileSystem.LocalStorage
-                .CreateFile(this.OUTPUT_FILE, CreationCollisionOption.ReplaceExisting);
+                .CreateFile(this.outputFilename, CreationCollisionOption.ReplaceExisting);
 
             using (var tempFileStream = tempFile.Open(FileAccess.Read))
             using (var outputFileStream = outputFile.Open(FileAccess.Write))
@@ -145,8 +152,13 @@ namespace Plugin.BingSpeech.Services
 
         public void RemoveRecording()
         {
+            if (this.outputFilename == null)
+            {
+                throw new MicrophoneServiceException("You have to start recording first !");
+            }
+
             CrossStorage.FileSystem.LocalStorage
-                .GetFile(this.OUTPUT_FILE)
+                .GetFile(this.outputFilename)
                 .Delete();
         }
 

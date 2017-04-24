@@ -18,7 +18,7 @@ namespace Plugin.BingSpeech.Services
         private readonly bool IS_FLOAT_KEY = false;
         private readonly bool IS_BIG_ENDIAN_KEY = false;
 
-        private readonly string OUTPUT_FILE = "plugin-bingspeech-audio.wav";
+        private string outputFilename = null;
 
         private AVAudioRecorder _audioRecorder = null;
 
@@ -27,10 +27,12 @@ namespace Plugin.BingSpeech.Services
             throw new NotImplementedException();
         }
 
-        public void StartRecording()
+        public void StartRecording(string recordingFilename)
         {
             try
             {
+                this.outputFilename = recordingFilename;
+
                 if (this._audioRecorder == null)
                 {
                     InitializeRecorder();
@@ -65,10 +67,8 @@ namespace Plugin.BingSpeech.Services
 
         private void InitialiseAudioRecorder()
         {
-            NSError error = null;
-
             var outputFilePath = CrossStorage.FileSystem.LocalStorage
-                .CreateFile(this.OUTPUT_FILE, CreationCollisionOption.ReplaceExisting)
+                .CreateFile(this.outputFilename, CreationCollisionOption.ReplaceExisting)
                 .FullPath;
 
             var url = NSUrl.FromFilename(outputFilePath);
@@ -96,7 +96,7 @@ namespace Plugin.BingSpeech.Services
             var settingsDictionary = NSDictionary.FromObjectsAndKeys(values, keys);
             var audioSettings = new AudioSettings(settingsDictionary);
 
-            this._audioRecorder = AVAudioRecorder.Create(url, audioSettings, out error);
+            this._audioRecorder = AVAudioRecorder.Create(url, audioSettings, out NSError error);
 
             if (error != null)
             {
@@ -113,6 +113,11 @@ namespace Plugin.BingSpeech.Services
                     throw new MicrophoneServiceException("You have to start recording first !");
                 }
 
+                if (this.outputFilename == null)
+                {
+                    throw new MicrophoneServiceException("You have to start recording first !");
+                }
+
                 this._audioRecorder.Stop();
             }
             catch (Exception ex)
@@ -123,8 +128,13 @@ namespace Plugin.BingSpeech.Services
 
         public void RemoveRecording()
         {
+            if (this.outputFilename == null)
+            {
+                throw new MicrophoneServiceException("You have to start recording first !");
+            }
+
             CrossStorage.FileSystem.LocalStorage
-                .GetFile(this.OUTPUT_FILE)
+                .GetFile(this.outputFilename)
                 .Delete();
         }
     }
