@@ -59,7 +59,7 @@ namespace Plugin.BingSpeech.Services
                 var content = new StreamContent(fileStream);
 
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer ", this._authenticationService.Token);
+                    new AuthenticationHeaderValue("Bearer", this._authenticationService.Token);
 
                 var response = await client.PostAsync(this._requestUri, content);
 
