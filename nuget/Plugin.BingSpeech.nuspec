@@ -2,7 +2,7 @@
 <package>
     <metadata>
         <id>Plugin.BingSpeech</id>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <title>BingSpeech</title>
         <authors>Laurentiu Stamate</authors>
         <owners>Laurentiu Stamate</owners>
@@ -11,7 +11,7 @@
         <iconUrl>https://raw.githubusercontent.com/laurentiustamate94/bing-speech-library/master/nuget/logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>NetStandard implementation of the Bing Speech API (Speech-To-Text) from Microsoft Cognitive Services</description>
-        <releaseNotes>BREAKING CHANGES: Change the way the BingSpeechService initialises and how the recording file is saved</releaseNotes>
+        <releaseNotes>Fix problems regarding recordingFilename validations</releaseNotes>
         <copyright>Copyright 2017</copyright>
         <tags>xamarin xamarin-forms netstandard bing-speech microsoft cognitive-services speech-to-text</tags>
         <dependencies>
