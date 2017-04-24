@@ -33,6 +33,8 @@ namespace Plugin.BingSpeech.Services
         {
             try
             {
+                this.outputFilename = recordingFilename;
+
                 this.StartRecordingAsync()
                     .ConfigureAwait(continueOnCapturedContext: false);
             }
@@ -144,6 +146,8 @@ namespace Plugin.BingSpeech.Services
             CrossStorage.FileSystem.LocalStorage
                 .GetFile(this.outputFilename)
                 .Delete();
+
+            this.outputFilename = null;
         }
     }
 }
