@@ -4,8 +4,8 @@ namespace Plugin.BingSpeech.Abstractions.Interfaces
 {
     public interface IBingSpeechService
     {
-        Task<string> GetTextResult(string filename);
+        Task<string> GetTextResult(string recordedFilename);
 
-        void InitializeService(IAuthenticationService authenticationService);
+        void InitializeService(string subscriptionKey);
     }
 }

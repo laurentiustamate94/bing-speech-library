@@ -34,12 +34,5 @@ namespace Plugin.BingSpeech
                 return service;
             }
         }
-
-        public void InitializePlugin(string subscriptionKey)
-        {
-            var authenticationService = new AuthenticationService(subscriptionKey);
-
-            this.BingSpeechService.InitializeService(authenticationService);
-        }
     }
 }

@@ -12,12 +12,12 @@ namespace Plugin.BingSpeech.Services
 {
     internal class BingSpeechService : IBingSpeechService
     {
-        private readonly string requestUri;
-        private IAuthenticationService authenticationService;
+        private readonly string _requestUri = null;
+        private IAuthenticationService _authenticationService = null;
 
         public BingSpeechService()
         {
-            this.requestUri = string.Format("{0}?{1}&{2}&{3}&{4}&{5}&{6}&{7}&{8}",
+            this._requestUri = string.Format("{0}?{1}&{2}&{3}&{4}&{5}&{6}&{7}&{8}",
                 "https://speech.platform.bing.com/recognize",
                 "scenarios=smd",
                 "appid=D4D52672-91D7-4C74-8AD8-42B1D98141A5",
@@ -29,14 +29,19 @@ namespace Plugin.BingSpeech.Services
                 "requestid=" + Guid.NewGuid().ToString());
         }
 
-        public void InitializeService(IAuthenticationService authenticationService)
+        public void InitializeService(string subscriptionKey)
         {
-            this.authenticationService = authenticationService;
+            this._authenticationService = new AuthenticationService(subscriptionKey);
         }
 
-        public async Task<string> GetTextResult(string filename)
+        public async Task<string> GetTextResult(string recordedFilename)
         {
-            var file = CrossStorage.FileSystem.LocalStorage.GetFile(filename);
+            if(this._authenticationService == null)
+            {
+                throw new NullReferenceException("You must initialise the plugin first !");
+            }
+
+            var file = CrossStorage.FileSystem.LocalStorage.GetFile(recordedFilename);
 
             using (var fileStream = file.Open(FileAccess.Read))
             {
@@ -54,9 +59,9 @@ namespace Plugin.BingSpeech.Services
                 var content = new StreamContent(fileStream);
 
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", authenticationService.Token);
+                    new AuthenticationHeaderValue("Bearer ", this._authenticationService.Token);
 
-                var response = await client.PostAsync(requestUri, content);
+                var response = await client.PostAsync(this._requestUri, content);
 
                 return await response.Content.ReadAsStringAsync();
             }
